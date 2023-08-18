@@ -2,6 +2,7 @@ package com.dh.movieservice.controller;
 
 import com.dh.movieservice.model.Movie;
 import com.dh.movieservice.service.MovieService;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,7 +17,8 @@ import java.util.List;
 public class MovieController {
 
     private final MovieService movieService;
-
+    @Value("${idRandom}")
+    private String port;
     public MovieController(MovieService movieService) {
         this.movieService = movieService;
     }
@@ -29,5 +31,10 @@ public class MovieController {
     @PostMapping("/save")
     ResponseEntity<Movie> saveMovie(@RequestBody Movie movie) {
         return ResponseEntity.ok().body(movieService.save(movie));
+    }
+
+    @GetMapping("/find")
+    public ResponseEntity<String> find() {
+        return ResponseEntity.ok(port);
     }
 }
